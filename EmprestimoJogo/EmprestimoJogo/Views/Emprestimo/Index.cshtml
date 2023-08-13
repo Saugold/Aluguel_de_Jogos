@@ -1,0 +1,55 @@
+﻿@model IEnumerable<EmprestimosModel>  //pegando o EmprestimosModel como IEnumerable
+
+<div class="container">
+    @*Estilizações*@
+    <div class="d-flex justify-content-between align-items-center mb-5">
+        <h1>Empréstimos</h1>
+        <a class="btn btn-success mx-2" asp-controller="Emprestimo" asp-action="Cadastrar"><i class="bi bi-plus-square mx-2"></i>Cadastrar novo Empréstimo</a>
+    </div>
+    @*Mensagens de feedback*@
+    @if(TempData["MensagemSucesso"] != null) 
+    {
+        <div class="alert alert-sucess text-light bg-primary " role="alert">
+            @TempData["MensagemSucesso"];
+        </div>
+
+    }
+    @if (TempData["MensagemErro"] != null)
+    {
+        <div class="alert alert-danger text-light " role="alert">
+            @TempData["MensagemErro"];
+        </div>
+
+    }
+    @*---------------------------------------*@
+<table id="Emprestimos" class="table table-dark table-hover">
+    <thead>
+        <tr>
+            <th scope="col">Recebedor</th>
+            <th scope="col">Fornecedor</th>
+            <th scope="col">Jogo</th>
+            <th scope="col">Ultima Atualização</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+            @if (Model != null) //verificando se existe um registro na tabela
+            {
+            @foreach(var emprestimo in Model) //foreach para percorrer a tabela 
+            {
+                <tr>
+                    <th scope="row">@emprestimo.Recebedor</th>
+                    <td>@emprestimo.Fornecedor</td>
+                    <td>@emprestimo.JogoEmprestado</td>
+                    <td>@emprestimo.DataUltimaAtualizacao</td>
+                    <td>
+                            <a asp-controller="Emprestimo" asp-action="Editar" asp-route-id="@emprestimo.Id" class="btn btn-warning mx-2"><i class="bi bi-pencil-square mx-2"></i>Editar</a>
+                            <a asp-controller="Emprestimo" asp-action="Excluir" asp-route-id="@emprestimo.Id" class=" btn btn-danger mx-2"><i class="bi bi-x-square mx-2"></i>Excluir</a>
+                    </td>
+                </tr>
+            }
+        }
+        
+    </tbody>
+</table>
+</div>
